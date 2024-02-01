@@ -1,0 +1,16 @@
+
+.authContainer{
+  background-color: rgba(240, 255, 255, 0.791);
+  max-width:45rem ;    display: flex;
+  margin-top: 1rem;
+  border-radius: 8px;
+
+
+}
+
+.authPage{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  flex-direction: column;
+}
