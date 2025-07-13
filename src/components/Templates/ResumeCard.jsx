@@ -1,48 +1,58 @@
-// ResumeCard.jsx
 import React from "react";
-import "./ResumeCard.css";
+import styles from "./ResumeCard.module.css";
+
 const ResumeCard = ({ personalInfo, education, experience }) => {
   return (
-    <div className="ResumeContainer">
-      <h4>Personal Details:</h4>
-      {personalInfo && (
-        <>
-          <p>First Name: {personalInfo.firstName}</p>
-          <p>Last Name: {personalInfo.lastName}</p>
-          <p>Occupation: {personalInfo.occupation}</p>
+    <div className={styles.resumeContainer}>
+      <div className={styles.sideSection}>
+        <h4>Personal Details</h4>
+        <div className={styles.personalDetails}>
+          <p>
+            {personalInfo.firstName} {personalInfo.lastName}
+          </p>
+          <img src={personalInfo.profilePhoto} alt="Profile" className={styles.profileImg}/>
           <p>Address: {personalInfo.address}</p>
-          <p>Phone: {personalInfo.phone}</p>
-          <p>Email: {personalInfo.email}</p>
-          <p>Nationality: {personalInfo.nationality}</p>
-          <p>Date of Birth: {personalInfo.dateOfBirth}</p>
+          <p>{personalInfo.phone}</p>
+          <p>{personalInfo.email}</p>
+          <p>{personalInfo.nationality}</p>
+          <p>{personalInfo.dateOfBirth}</p>
           <p>LinkedIn Profile: {personalInfo.linkedin}</p>
-          {/* Add other personal details fields as needed */}
-        </>
-      )}
-
-      <h4>Education:</h4>
-      {education && (
-        <>
-          <p>University: {education.university}</p>
-          <p>Degree: {education.degree}</p>
-          <p>Study Location: {education.studyLocation}</p>
-          <p>Graduation Year: {education.graduationYear}</p>
-          <p>Share Experience: {education.aboutEducation}</p>
-          {/* Add other education fields as needed */}
-        </>
-      )}
-
-      <h4>Work Experience:</h4>
-      {experience && (
-        <div>
-          <p>Company Name: {experience.CompanyName}</p>
-          <p>Position: {experience.Position}</p>
-          <p>End Year: {experience.EndYear}</p>
-          <p>Start Year: {experience.StartYear}</p>
-          <p>Share Experience: {experience.aboutYourself}</p>
         </div>
-        // Add logic for rendering multiple workplaces if needed
-      )}
+      </div>
+
+      <div className={styles.mainSection}>
+        <h4>Education</h4>
+        <div className={styles.education}>
+          {/* Render education details */}
+          {education && (
+            <ul>
+              <li>University: {education.university}</li>
+              <li>Degree: {education.degree}</li>
+              <li>Study Location: {education.studyLocation}</li>
+              <li>Graduation Year: {education.graduationYear}</li>
+              <li>About Education: {education.aboutEducation}</li>
+            </ul>
+          )}
+        </div>
+
+        <h4>Work Experience</h4>
+        <div className={styles.workExperience}>
+          {/* Render work experience details */}
+          {Array.isArray(experience) &&
+            experience.map((exp, index) => (
+              <div key={index}>
+                <ul>
+                  <li>Company: {exp.CompanyName} Position: {exp.Position}</li>
+                  
+                  <li>End Year: {exp.EndYear}</li>
+                  <li>Start Year: {exp.StartYear}</li>
+                  <li>Personal experience: {exp.aboutYourself}</li>
+                </ul>
+              </div>
+            ))}
+          {!Array.isArray(experience) && <p>No work experience available</p>}
+        </div>
+      </div>
     </div>
   );
 };

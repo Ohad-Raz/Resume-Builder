@@ -33,53 +33,53 @@ export default function Experience({ updateFormData }) {
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id={`CompanyName${workplace.id}`}
-              name={`CompanyName${workplace.id}`}
+              id={`companyName${workplace.id}`}
+              name={`companyName${workplace.id}`}
               label="Company Name"
               fullWidth
               variant="standard"
               onChange={(e) =>
-                handleFieldChange(workplace.id, "CompanyName", e.target.value)
+                handleFieldChange(workplace.id, "companyName", e.target.value)
               }
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id={`Position${workplace.id}`}
-              name={`Position${workplace.id}`}
+              id={`position${workplace.id}`}
+              name={`position${workplace.id}`}
               label="Position"
               fullWidth
               variant="standard"
               onChange={(e) =>
-                handleFieldChange(workplace.id, "Position", e.target.value)
+                handleFieldChange(workplace.id, "position", e.target.value)
               }
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id={`EndYear${workplace.id}`}
-              name={`EndYear${workplace.id}`}
+              id={`endYear${workplace.id}`}
+              name={`endYear${workplace.id}`}
               label="End Year"
               fullWidth
               variant="standard"
               onChange={(e) =>
-                handleFieldChange(workplace.id, "EndYear", e.target.value)
+                handleFieldChange(workplace.id, "endYear", e.target.value)
               }
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id={`StartYear${workplace.id}`}
-              name={`StartYear${workplace.id}`}
+              id={`startYear${workplace.id}`}
+              name={`startYear${workplace.id}`}
               label="Start Year"
               fullWidth
               variant="standard"
               multiline
               rows={1}
               onChange={(e) =>
-                handleFieldChange(workplace.id, "StartYear", e.target.value)
+                handleFieldChange(workplace.id, "startYear", e.target.value)
               }
             />
           </Grid>

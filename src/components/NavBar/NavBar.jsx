@@ -4,9 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { useUser } from "../Context/UserContext";
-import "./NavBar.css";
+import styles from "./NavBar.module.css"; // Import CSS module
 
 function NavBar() {
   const auth = getAuth();
@@ -24,20 +23,13 @@ function NavBar() {
     }
   };
   return (
-    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary fixed-top">
+    <Navbar collapseOnSelect expand="lg" className={`${styles.navBar} fixed-top`}>
       <Container>
         <Navbar.Brand as={Link} to="/home">
           Home page
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          {/* <Nav className="me-auto">
-            <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/action/3.1">
-                Action
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav> */}
           <Nav>
             <Nav.Link as={Link} to="/resume-builder">
               Resume Builder
@@ -47,7 +39,7 @@ function NavBar() {
                 <Nav.Link as={Link} to="/my-resumes">
                   My Resumes
                 </Nav.Link>
-                <button onClick={handleSignOut} className="signOutBtn">
+                <button onClick={handleSignOut} className={`signOutBtn ${styles.SignOutBtn}`}>
                   Sign Out
                 </button>
               </>

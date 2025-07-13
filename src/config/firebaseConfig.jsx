@@ -6,13 +6,13 @@ import * as React from 'react';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCH0vOls9C30YSfv_H8n7oikks-WnlXbng",
-  authDomain: "resume-builder-cd3e1.firebaseapp.com",
-  projectId: "resume-builder-cd3e1",
-  storageBucket: "resume-builder-cd3e1.appspot.com",
-  messagingSenderId: "406327890524",
-  appId: "1:406327890524:web:83abccddf448dac2f9cc99",
-  measurementId: "G-LDJCZ5929D"
+  apiKey: "AIzaSyBTV_IuV7p2LPc8yb5aPJOxk-wn9aoYOkk",
+  authDomain: "resumebuilder-641ec.firebaseapp.com",
+  projectId: "resumebuilder-641ec",
+  storageBucket: "resumebuilder-641ec.appspot.com",
+  messagingSenderId: "812630398489",
+  appId: "1:812630398489:web:bf5c83f869eed1a6893c88",
+  measurementId: "G-Z26N0FKN1E"
 };
 
 // Initialize Firebase

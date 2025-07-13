@@ -14,24 +14,22 @@ import Typography from "@mui/material/Typography";
 import Education from "../Education/Education";
 import Experience from "../Experience/Experience";
 import PersonalDetails from "../PersonalDetails/PersonalDetails";
-import { dataBase } from "../../config/FireBaseConfig";
+import { dataBase } from "../../config/firebaseConfig";
 import { useUser } from "../Context/UserContext";
-
-import { auth } from "../../config/FireBaseConfig";
-import { collection, addDoc } from "@firebase/firestore";
+import ResumeCard from "../Templates/ResumeCard";
+import { auth } from "../../config/firebaseConfig";
+import { collection, addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
-
-
 
 const steps = ["Personal Details", "Education", "Experience"];
 export default function FormBuilder() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [education, setEducation] = React.useState({});
-  const [experience, setExperience] = React.useState({});
+  const [experience, setExperience] = React.useState([]);
   const [personalInfo, setPersonalInfo] = React.useState({});
-  const [isFirebaseInitialized, setIsFirebaseInitialized] = React.useState(false);
-  const { user } = useUser(useUser);
+  const [isFirebaseInitialized, setIsFirebaseInitialized] =
+    React.useState(false);
+  const { user } = useUser();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, () => {
@@ -57,16 +55,34 @@ export default function FormBuilder() {
       console.error("Firebase is not initialized yet.");
       return;
     }
+
+    if (!dataBase) {
+      console.error("dataBase is not available");
+      return;
+    }
+
+    console.log("dataBase object:", dataBase);
+    console.log("dataBase type:", typeof dataBase);
+    console.log("user:", user);
+
     const collectionPath = "resumes";
     try {
       const formData = { education, experience, personalInfo };
-      const docRef = await addDoc(
-        collection(dataBase, collectionPath),
-        { ...formData, user: user ? user.uid : null }
-      );
+      console.log("About to call collection with:", dataBase, collectionPath);
+
+      // Create the collection reference
+      const resumesCollection = collection(dataBase, collectionPath);
+      console.log("Collection reference created:", resumesCollection);
+
+      const docRef = await addDoc(resumesCollection, {
+        ...formData,
+        user: user ? user.uid : null,
+      });
       console.log("Document written with ID: ", docRef.id);
     } catch (error) {
       console.error("Error adding document: ", error);
+      console.error("Error details:", error.message);
+      console.error("Error code:", error.code);
     }
   };
 
@@ -77,11 +93,22 @@ export default function FormBuilder() {
     }));
   };
 
-  const updateExperience = (field, value) => {
-    setExperience((prevExperience) => ({
-      ...prevExperience,
-      [field]: value,
-    }));
+  const updateExperience = (value) => {
+    setExperience((prevExperience) => {
+      const indexToUpdate = prevExperience.findIndex(
+        (workplace) => workplace.id === value.id
+      );
+
+      if (indexToUpdate !== -1) {
+        return [
+          ...prevExperience.slice(0, indexToUpdate),
+          { ...prevExperience[indexToUpdate], ...value },
+          ...prevExperience.slice(indexToUpdate + 1),
+        ];
+      }
+
+      return [...prevExperience, value];
+    });
   };
 
   const updatePersonalInfo = (field, value) => {
@@ -123,7 +150,10 @@ export default function FormBuilder() {
         </Toolbar>
       </AppBar>
       <Container component="main" maxWidth="lg" sx={{ mb: 4 }}>
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+        <Paper
+          variant="outlined"
+          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+        >
           <Typography component="h1" variant="h4" align="center">
             Build Resume
           </Typography>
